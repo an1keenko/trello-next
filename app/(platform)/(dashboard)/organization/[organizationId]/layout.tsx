@@ -8,3 +8,5 @@ const OrganizationIdLayout = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
+
+export default OrganizationIdLayout;
