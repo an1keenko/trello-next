@@ -6,6 +6,7 @@ import { Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { defaultImages } from "@/constants/images";
 
 interface FormPickerProps {
   id: string;
@@ -15,7 +16,8 @@ interface FormPickerProps {
 export const FormPicker = ({ id }: FormPickerProps) => {
   const { pending } = useFormStatus();
 
-  const [images, setImages] = useState<Array<Record<string, any>>>([]);
+  const [images, setImages] =
+    useState<Array<Record<string, any>>>(defaultImages);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImageId, setSelectedImageId] = useState(null);
 
@@ -35,7 +37,7 @@ export const FormPicker = ({ id }: FormPickerProps) => {
         }
       } catch (error) {
         console.log(error);
-        setImages([]);
+        setImages(defaultImages);
       } finally {
         setIsLoading(false);
       }
