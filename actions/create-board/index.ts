@@ -9,7 +9,6 @@ import { CreateBoard } from "@/actions/create-board/schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
-  console.log(orgId);
 
   if (!userId || !orgId) {
     return {
@@ -19,7 +18,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
   const { title, image } = data;
 
-  const [imageId, imageThumbUrl, imageFullUrl, imageLinkHTML, imageUserName] =
+  const [imageId, imageThumbUrl, imageFullUrl, imageUserName, imageLinkHTML] =
     image.split("|");
 
   if (
@@ -33,6 +32,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       error: "Missing fields. Failed to create board.",
     };
   }
+
   let board;
 
   try {
@@ -43,13 +43,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         imageId,
         imageThumbUrl,
         imageFullUrl,
-        imageLinkHTML,
         imageUserName,
+        imageLinkHTML,
       },
     });
   } catch (error) {
     return {
-      error: "Failed to create.",
+      error: `Failed to create.`,
     };
   }
 
