@@ -2,6 +2,31 @@ import { auth } from "@clerk/nextjs";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { boardId: string };
+}) {
+  const { orgId } = auth();
+
+  if (!orgId) {
+    return {
+      title: "Board",
+    };
+  }
+
+  const board = await db.board.findUnique({
+    where: {
+      id: params.boardId,
+      orgId,
+    },
+  });
+
+  return {
+    title: board?.title || "Board",
+  };
+}
+
 const BoardIdLayout = async ({
   children,
   params,
@@ -27,7 +52,10 @@ const BoardIdLayout = async ({
   }
 
   return (
-    <div>
+    <div
+      className="relatiive h-full bg-no-repeat bg-cover bg-center"
+      style={{ backgroundImage: `url(${board.imageFullUrl})` }}
+    >
       <main className="relative pt-28 h-full">{children}</main>
     </div>
   );
