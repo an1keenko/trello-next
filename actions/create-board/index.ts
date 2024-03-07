@@ -1,11 +1,13 @@
 "use server";
 
 import { auth } from "@clerk/nextjs";
-import { InputType, ReturnType } from "@/actions/create-board/types";
-import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+
+import { db } from "@/lib/db";
 import { createSafeAction } from "@/lib/create-safe-action";
-import { CreateBoard } from "@/actions/create-board/schema";
+
+import { InputType, ReturnType } from "./types";
+import { CreateBoard } from "./schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -18,7 +20,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
   const { title, image } = data;
 
-  const [imageId, imageThumbUrl, imageFullUrl, imageUserName, imageLinkHTML] =
+  const [imageId, imageThumbUrl, imageFullUrl, imageLinkHTML, imageUserName] =
     image.split("|");
 
   if (
@@ -49,7 +51,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     });
   } catch (error) {
     return {
-      error: `Failed to create. ${error}`,
+      error: "Failed to create.",
     };
   }
 
