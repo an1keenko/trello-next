@@ -1,20 +1,22 @@
 "use client";
 
 import { toast } from "sonner";
-
 import { List } from "@prisma/client";
 import { useEventListener } from "usehooks-ts";
-import { ElementRef, useRef, useState } from "react";
+import { useState, useRef, ElementRef } from "react";
 
 import { useAction } from "@/hooks/use-action";
 import { updateList } from "@/actions/update-list";
 import { FormInput } from "@/components/form/form-input";
 
+import { ListOptions } from "./list-options";
+
 interface ListHeaderProps {
   data: List;
+  onAddCard: () => void;
 }
 
-export const ListHeader = ({ data }: ListHeaderProps) => {
+export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
   const [title, setTitle] = useState(data.title);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -73,7 +75,7 @@ export const ListHeader = ({ data }: ListHeaderProps) => {
   useEventListener("keydown", onKeyDown);
 
   return (
-    <div className="pt-2 px-2 text-sm font-semibold flex justify-between items-start gap-x-2">
+    <div className="pt-2 px-2 text-sm font-semibold flex justify-between items-start- gap-x-2">
       {isEditing ? (
         <form ref={formRef} action={handleSubmit} className="flex-1 px-[2px]">
           <input hidden id="id" name="id" value={data.id} />
@@ -82,7 +84,7 @@ export const ListHeader = ({ data }: ListHeaderProps) => {
             ref={inputRef}
             onBlur={onBlur}
             id="title"
-            placeholder="Enter list title..."
+            placeholder="Enter list title.."
             defaultValue={title}
             className="text-sm px-[7px] py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition truncate bg-transparent focus:bg-white"
           />
@@ -96,6 +98,7 @@ export const ListHeader = ({ data }: ListHeaderProps) => {
           {title}
         </div>
       )}
+      <ListOptions onAddCard={onAddCard} data={data} />
     </div>
   );
 };
