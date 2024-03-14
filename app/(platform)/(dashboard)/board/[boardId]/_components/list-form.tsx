@@ -1,18 +1,18 @@
 "use client";
 
 import { toast } from "sonner";
-
 import { Plus, X } from "lucide-react";
-import { ElementRef, useRef, useState } from "react";
-import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { useParams, useRouter } from "next/navigation";
+import { useState, useRef, ElementRef } from "react";
+import { useEventListener, useOnClickOutside } from "usehooks-ts";
 
-import { ListWrapper } from "@/app/(platform)/(dashboard)/board/[boardId]/_components/list-wrapper";
+import { useAction } from "@/hooks/use-action";
+import { Button } from "@/components/ui/button";
+import { createList } from "@/actions/create-list";
 import { FormInput } from "@/components/form/form-input";
 import { FormSubmit } from "@/components/form/form-submit";
-import { Button } from "@/components/ui/button";
-import { useAction } from "@/hooks/use-action";
-import { createList } from "@/actions/create-list";
+
+import { ListWrapper } from "./list-wrapper";
 
 export const ListForm = () => {
   const router = useRouter();
@@ -57,6 +57,11 @@ export const ListForm = () => {
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
     const boardId = formData.get("boardId") as string;
+
+    execute({
+      title,
+      boardId,
+    });
   };
 
   if (isEditing) {
@@ -74,7 +79,7 @@ export const ListForm = () => {
             className="text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition"
             placeholder="Enter list title..."
           />
-          <input hidden value={params.boardId} name="boardId" />
+          <input hidden value={params.boardId} name="boardId" readOnly />
           <div className="flex items-center gap-x-1">
             <FormSubmit>Add list</FormSubmit>
             <Button onClick={disableEditing} size="sm" variant="ghost">

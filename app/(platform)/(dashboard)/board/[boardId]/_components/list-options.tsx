@@ -7,16 +7,16 @@ import { MoreHorizontal, X } from "lucide-react";
 
 import {
   Popover,
-  PopoverClose,
   PopoverContent,
   PopoverTrigger,
+  PopoverClose,
 } from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-action";
 import { Button } from "@/components/ui/button";
+import { copyList } from "@/actions/copy-list";
 import { deleteList } from "@/actions/delete-list";
 import { FormSubmit } from "@/components/form/form-submit";
 import { Separator } from "@/components/ui/separator";
-import { copyList } from "@/actions/copy-list";
 
 interface ListOptionsProps {
   data: List;
@@ -82,6 +82,7 @@ export const ListOptions = ({ data, onAddCard }: ListOptionsProps) => {
         <Button
           onClick={onAddCard}
           className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
+          variant="ghost"
         >
           Add card...
         </Button>
@@ -103,7 +104,7 @@ export const ListOptions = ({ data, onAddCard }: ListOptionsProps) => {
             variant="ghost"
             className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
           >
-            Delete this list...
+            Delete this list
           </FormSubmit>
         </form>
       </PopoverContent>
