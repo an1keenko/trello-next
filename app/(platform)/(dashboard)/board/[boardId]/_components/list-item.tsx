@@ -1,13 +1,14 @@
 "use client";
 
 import { ElementRef, useRef, useState } from "react";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+
+import { cn } from "@/lib/utils";
 import { ListWithCards } from "@/types";
 
-import { ListHeader } from "./list-header";
 import { CardForm } from "./card-form";
-import { cn } from "@/lib/utils";
-import { CardItem } from "@/app/(platform)/(dashboard)/board/[boardId]/_components/card-item";
-import { Draggable, Droppable } from "@hello-pangea/dnd";
+import { CardItem } from "./card-item";
+import { ListHeader } from "./list-header";
 
 interface ListItemProps {
   data: ListWithCards;
@@ -39,7 +40,7 @@ export const ListItem = ({ data, index }: ListItemProps) => {
           className="shrink-0 h-full w-[272px] select-none"
         >
           <div
-            {...provided.draggableProps}
+            {...provided.dragHandleProps}
             className="w-full rounded-md bg-[#f1f2f4] shadow-md pb-2"
           >
             <ListHeader onAddCard={enableEditing} data={data} />
@@ -60,7 +61,6 @@ export const ListItem = ({ data, index }: ListItemProps) => {
                 </ol>
               )}
             </Droppable>
-
             <CardForm
               listId={data.id}
               ref={textareaRef}
