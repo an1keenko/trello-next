@@ -1,14 +1,15 @@
 "use client";
 
+import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
+import { Activity, CreditCard, Layout, Settings } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { Activity, CreditCard, Layout, Settings } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -22,7 +23,7 @@ export type Organization = {
 interface NavItemProps {
   isExpanded: boolean;
   isActive: boolean;
-  organization: any;
+  organization: Organization;
   onExpand: (id: string) => void;
 }
 
@@ -72,12 +73,12 @@ export const NavItem = ({
         )}
       >
         <div className="flex items-center gap-x-2">
-          <div className="w-7 h-7 relative ">
+          <div className="w-7 h-7 relative">
             <Image
               fill
               src={organization.imageUrl}
               alt="Organization"
-              className="rounded-dm object-cover"
+              className="rounded-sm object-cover"
             />
           </div>
           <span className="font-medium text-sm">{organization.name}</span>
